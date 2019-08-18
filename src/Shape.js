@@ -1,4 +1,4 @@
-var ObstacleFactory = function(model){
+var ObstacleFactory = function(wallOptions){
 	// shape.prototype.draw()
 
 }
@@ -34,4 +34,3 @@ BirdFactory.prototype.draw = function(currentTime, ctx, canvas) {
 
 	ctx.restore();
 }
-
