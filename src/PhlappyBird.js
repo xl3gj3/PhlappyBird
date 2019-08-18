@@ -49,6 +49,8 @@ var MainFactory = function() {
         //     renderer.render();// for example, 10t
         // }
         let bird = new BirdFactory({x: 10, y: 10});
+		let obstacle = new ObstacleFactory({x:10,y:10});
+		obstacle.draw(ctx,canvas);
         bird.draw(0, ctx, canvas);
     }
 
@@ -60,4 +62,3 @@ var MainFactory = function() {
 var myGame = MainFactory();
 // myGame.config({});
 myGame.start();
-
