@@ -1,11 +1,11 @@
 var RendererFactory = function(model){
-	const renderer = {};
+    const renderer = {};
 
-	renderer.render = function() {
-		// loop through model
-		// get individual shapeObj
-		// do shapeObj.draw();
-	}
+    renderer.render = function() {
+        // loop through model
+        // get individual shapeObj
+        // do shapeObj.draw();
+    }
 
-	return renderer;
+    return renderer;
 }

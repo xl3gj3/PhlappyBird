@@ -1,8 +1,8 @@
 var UserInputFactory = function(model) {
-	switch (config.uiType) {
-		// load browser factory
-		case 'BROWSER':
+    switch (config.uiType) {
+        // load browser factory
+        case 'BROWSER':
 
-	}
-	window.addEventListener('click')
+    }
+    window.addEventListener('click')
 }
