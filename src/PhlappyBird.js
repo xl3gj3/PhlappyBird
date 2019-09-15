@@ -48,8 +48,10 @@ var MainFactory = function() {
         //     processor.process(); // for example, 5t
         //     renderer.render();// for example, 10t
         // }
+        let obstacle = new ObstacleFactory({x:100,y:100,height:450,width:180})
         let bird = new BirdFactory({x: 10, y: 10});
         bird.draw(0, ctx, canvas);
+        obstacle.draw(ctx, canvas);
     }
 
     return main;
@@ -60,4 +62,3 @@ var MainFactory = function() {
 var myGame = MainFactory();
 // myGame.config({});
 myGame.start();
-
