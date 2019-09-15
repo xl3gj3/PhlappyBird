@@ -84,7 +84,7 @@ var MainFactory = function() {
         //     processor.process(); // for example, 5t
         //     renderer.render();// for example, 10t
         // }
-        let start = Date.now(); // remember start time   
+        let start = Date.now(); // remember start time
         phlappyBird.viewObject.bird.config = {
             x: 10,
             y: 10,
@@ -113,4 +113,3 @@ var myGame = MainFactory();
 myGame.loadImage(function(frameImage) {
     myGame.start(frameImage);
 });
-
