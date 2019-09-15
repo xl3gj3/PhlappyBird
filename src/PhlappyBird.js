@@ -87,7 +87,8 @@ var MainFactory = function() {
         //     processor.process(); // for example, 5t
         //     renderer.render();// for example, 10t
         // }
-        let start = Date.now(); // remember start time   
+
+        let start = Date.now(); // remember start time
         const birdConfig = {
             x: 10,
             y: 10,
@@ -115,6 +116,11 @@ var MainFactory = function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             renderer.render(phlappyBird, currTS);
         }, renderT);
+
+        // let obstacle = new ObstacleFactory({x:100,y:100,height:450,width:180})
+        // let bird = new BirdFactory({x: 10, y: 10});
+        // bird.draw(0, ctx, canvas);
+        // obstacle.draw(ctx, canvas);
     }
 
     return main;
@@ -124,7 +130,7 @@ var MainFactory = function() {
 // index.html
 var myGame = MainFactory();
 // myGame.config({});
+
 myGame.loadImage(function(frameImage) {
     myGame.start(frameImage);
 });
-
