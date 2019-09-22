@@ -10,11 +10,17 @@
         </style>
     </head>
     <body>
-        <canvas id="phlappy-bird-canvas"></canvas>
+        <div id="wrapper">
+            <canvas id="phlappy-bird-canvas"></canvas>
+            <!-- Image Reference:
+                https://www.vectorstock.com/royalty-free-vector/art-scenery-cartoon-style-game-background-vector-14922893 -->
+            <canvas id="background-canvas" width=1024 height=800 style="background: url('./assets/background/background_1030_800.png')"></canvas>
+        </div>
         <script src='Processor.js'></script>
         <script src='Renderer.js'></script>
         <script src='Shape.js'></script>
         <script src='UserInput.js'></script>
         <script src='PhlappyBird.js'></script>
+        <link rel="stylesheet" type="text/css" href="PhlappyBird.css">
     </body>
 </html>
