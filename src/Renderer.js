@@ -12,6 +12,9 @@ var RendererFactory = function(model, ctx){
                         model.viewObject.bird.factory,
                         0);
                     break;
+                case 'rect':
+                    renderer.renderRect(model.viewObject.rect);
+                    break;
                 default:
                     break;
             }
@@ -19,7 +22,7 @@ var RendererFactory = function(model, ctx){
     }
 
     renderer.render = function(model, currTS) {
-        // loop through 
+        // loop through
         for (shape in model.viewObject) {
             // get individual shapeObj
             switch(shape) {
@@ -27,6 +30,9 @@ var RendererFactory = function(model, ctx){
                     renderer.renderBird(
                         model.viewObject.bird.factory,
                         currTS);
+                    break;
+                case 'rect':
+                    renderer.renderRect(model.viewObject.rect);
                     break;
                 default:
                     break;
@@ -37,6 +43,15 @@ var RendererFactory = function(model, ctx){
     renderer.renderBird = function(birdFactory, currTS) {
         birdFactory.draw(currTS, renderer.ctx);
     }
+    renderer.renderRect = function(rectArray) {
+        // console.log("rect factory");
+        for (let wall of rectArray) {
+            for (let rect of wall) {
+                rect.draw(renderer.ctx);
 
+            }
+        }
+
+    }
     return renderer;
 }

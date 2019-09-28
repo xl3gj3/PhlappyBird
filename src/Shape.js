@@ -1,5 +1,9 @@
 var ObstacleFactory = function(wallOptions){
     // shape.prototype.draw();
+    this.brickConfig = {
+        height : 7,
+        width : 21,
+    };
     this.x = wallOptions.x;
     this.y = wallOptions.y;
     this.height = wallOptions.height;
@@ -7,21 +11,35 @@ var ObstacleFactory = function(wallOptions){
     this.rgbArray = ['rgb(119, 54, 14)','rgb(140, 74, 13)','rgb(159, 91, 26)',
                     'rgb(119, 54, 14)','rgb(140, 74, 13)','rgb(159, 91, 26)','rgb(119, 54, 14)',
                     'rgb(140, 74, 13)','rgb(159, 91, 26)'];
+    this.NumberOfLayer = Math.round(this.height/this.brickConfig.height);
+    this.NumberOfBrick = Math.round(this.width/this.brickConfig.width);
+    this.rgbPerLayer = [];
+
+    for (var i = 0; i < this.NumberOfLayer; i++) {
+        const layerrgbArray = this.rgbArray.sort(function(a, b){return 0.5 - Math.random()});
+        const layerColor = []
+        for (var j = 0;j < this.NumberOfBrick; j++) {
+            layerColor.push(layerrgbArray[j]);
+        }
+        this.rgbPerLayer.push(layerColor);
+    }
 }
 
-ObstacleFactory.prototype.draw = function (ctx,canvas){
+ObstacleFactory.prototype.draw = function (ctx){
     // the bricks config will determined by
-    const brickConfig = {
-        height : 15,
-        width : 45,
-    };
-    ctx.fillStyle = this.rgbArray[Math.floor(Math.random() * Math.floor(this.rgbArray.length-1))];
-    ctx.fillRect(this.x , this.y, brickConfig.width,brickConfig.height);
-    ctx.strokeStyle = "rgb(0,0,0)";
-    ctx.strokeRect(this.x, this.y, brickConfig.width, brickConfig.height);
+    // const brickConfig = {
+    //     height : 7,
+    //     width : 21,
+    // };
+    // console.log("this.rgbPerLayer",this.rgbPerLayer);
+    // let originRGBArray = this.rgbArray;
+    // ctx.fillStyle = this.rgbArray[Math.floor(Math.random() * Math.floor(this.rgbArray.length-1))];
+    // ctx.fillRect(this.x , this.y, brickConfig.width,brickConfig.height);
+    // ctx.strokeStyle = "rgb(0,0,0)";
+    // ctx.strokeRect(this.x, this.y, brickConfig.width, brickConfig.height);
     // TEMP: we fix the number of layer and brick first, this will be determined by the given height and width
-    const NumberOfLayer = Math.round(this.height/brickConfig.height);
-    const NumberOfBrick = Math.round(this.width/brickConfig.width);
+    // const NumberOfLayer = Math.round(this.height/brickConfig.height);
+    // const NumberOfBrick = Math.round(this.width/brickConfig.width);
     // an obstacle is build by layers of bricks;
     // each brick has same height and width
     // trick is offset will start with "full bricks" and "half brick"
@@ -29,43 +47,55 @@ ObstacleFactory.prototype.draw = function (ctx,canvas){
             ---*------*------*---
             ------*------*------
     */
-    for (var i = 0; i < NumberOfLayer; i++) {
+    let originY = this.y;
+    for (var i = 0; i < this.NumberOfLayer; i++) {
         let originX = this.x;
         if (i%2 === 1) {
-            for (var k = 0; k < NumberOfBrick+1; k++) {
-                if (k===0 || k===NumberOfBrick) {
-                    ctx.fillStyle = this.rgbArray[Math.floor(Math.random() * Math.floor(this.rgbArray.length-1))];
-                    ctx.fillRect(originX , this.y, brickConfig.width/2,brickConfig.height);
+            for (var k = 0; k < this.NumberOfBrick+1; k++) {
+                if (k===0 || k===this.NumberOfBrick) {
+                    ctx.fillStyle = this.rgbPerLayer[i][k];
+                    ctx.fillRect(originX , this.y, this.brickConfig.width/2,this.brickConfig.height);
                     ctx.strokeStyle = "rgb(0,0,0)";
-                    ctx.strokeRect(originX, this.y, brickConfig.width/2, brickConfig.height);
-                    originX +=brickConfig.width/2;
+                    ctx.strokeRect(originX, this.y, this.brickConfig.width/2, this.brickConfig.height);
+                    originX +=this.brickConfig.width/2;
+                    // this.rgbArray.push(firstBrickColor);
                 } else {
-                    ctx.fillStyle = this.rgbArray[Math.floor(Math.random() * Math.floor(this.rgbArray.length-1))];
-                    ctx.fillRect(originX , this.y, brickConfig.width,brickConfig.height);
+                    ctx.fillStyle = this.rgbPerLayer[i][k];
+                    ctx.fillRect(originX , this.y, this.brickConfig.width,this.brickConfig.height);
                     ctx.strokeStyle = "rgb(0,0,0)";
-                    ctx.strokeRect(originX, this.y, brickConfig.width, brickConfig.height);
-                    originX +=brickConfig.width;
+                    ctx.strokeRect(originX, this.y, this.brickConfig.width, this.brickConfig.height);
+                    originX +=this.brickConfig.width;
+                    // this.rgbArray.push(firstBrickColor);
                 }
+                let firstBrickColor = this.rgbArray.shift();
+                this.rgbArray.push(firstBrickColor);
+
             }
         } else {
-            for (var j = 0; j < NumberOfBrick; j++) {
-                ctx.fillStyle = this.rgbArray[Math.floor(Math.random() * Math.floor(this.rgbArray.length-1))];
-                ctx.fillRect(originX , this.y, brickConfig.width,brickConfig.height);
+            for (var j = 0; j < this.NumberOfBrick; j++) {
+                ctx.fillStyle = this.rgbPerLayer[i][j];
+                ctx.fillRect(originX , this.y, this.brickConfig.width,this.brickConfig.height);
                 ctx.strokeStyle = "rgb(0,0,0)";
-                ctx.strokeRect(originX, this.y, brickConfig.width, brickConfig.height);
-                originX +=brickConfig.width;
+                ctx.strokeRect(originX, this.y, this.brickConfig.width, this.brickConfig.height);
+                originX +=this.brickConfig.width;
+                let firstBrickColor = this.rgbArray.shift();
+                this.rgbArray.push(firstBrickColor);
             }
         }
-        this.y += brickConfig.height;
-        console.log("final x , the width" , originX-this.x);
+        this.y += this.brickConfig.height;
+        // console.log("final x , the width" , originX-this.x);
     }
-    console.log("final y , the height" , this.y-100);
-    console.log(" given the height" , this.height);
-    console.log(" givven width" , this.width);
-    ctx.fillStyle = this.rgbArray[Math.floor(Math.random() * Math.floor(this.rgbArray.length-1))];
+     this.y = originY;
+     // this.rgbArray = originRGBArray;
 
-    ctx.fillRect(300, 100, this.width,this.height);
-    ctx.fillRect(100, 600, this.width,this.height);
+    // console.log("this.y",this.y);
+    // console.log("final y , the height" , this.y-100);
+    // console.log(" given the height" , this.height);
+    // console.log(" givven width" , this.width);
+    // ctx.fillStyle = this.rgbArray[Math.floor(Math.random() * Math.floor(this.rgbArray.length-1))];
+    //
+    // ctx.fillRect(300, 100, this.width,this.height);
+    // ctx.fillRect(100, 600, this.width,this.height);
 
 
 
