@@ -10,8 +10,8 @@ var MainFactory = function() {
                 // shape object
                 // Array <Array<Object>>
             ]
-
         },
+        wallMovingVelocity : {dx : 4},
         userControl: {},
     };
     // const defaultConfig = {
@@ -33,6 +33,7 @@ var MainFactory = function() {
 
     const renderer = new RendererFactory(phlappyBird, ctx);
     const processor = new ProcessorFactory(phlappyBird);
+    const utilityFunction = new Utilities();
     const NUM_OF_WALL = 10;
     const processT = 25;
     const renderT = 50;
@@ -45,26 +46,23 @@ var MainFactory = function() {
     //         ...userConfig
     //     };
     // };
-    const randomIntGenerator = (min,max) => {
-        return Math.round(min + Math.random() * (max-min))
-    }
     const initializeRect = () =>{
-        const { viewObject } = phlappyBird;
+        const { viewObject , wallMovingVelocity} = phlappyBird;
         const minNumRect = 2;
         const initPositionX = [350,450,550,650,750,850,950];
         for (let positionX of initPositionX) {
-            const NumberOfBrick = randomIntGenerator(2,3);
+            const NumberOfBrick = utilityFunction.randomIntGenerator(2,3);
             // console.log("initializeRect",NumberOfBrick);
             const listRects = [];
-            const rectWidth = randomIntGenerator(90,60);
-            let rectHeight = randomIntGenerator(200,300);
-            let obstacle = new ObstacleFactory( {x : positionX, y : 0,height:rectHeight,width:rectWidth})
+            const rectWidth = utilityFunction.randomIntGenerator(90,60);
+            let rectHeight = utilityFunction.randomIntGenerator(200,300);
+            let obstacle = new ObstacleFactory( {x : positionX, y : 0,height:rectHeight,width:rectWidth,dx:wallMovingVelocity.dx})
             listRects.push(obstacle);
-            rectHeight = randomIntGenerator(200,300);
-            obstacle = new ObstacleFactory( {x : positionX, y : canvas.height - rectHeight,height:rectHeight,width:rectWidth})
+            rectHeight = utilityFunction.randomIntGenerator(200,300);
+            obstacle = new ObstacleFactory( {x : positionX, y : canvas.height - rectHeight,height:rectHeight,width:rectWidth,dx:wallMovingVelocity.dx})
             listRects.push(obstacle);
             for (var i = 0; i < NumberOfBrick-minNumRect; i++) {
-                obstacle = new ObstacleFactory( {x : positionX, y : canvas.height - rectHeight,height:rectHeight,width:rectWidth})
+                obstacle = new ObstacleFactory( {x : positionX, y : canvas.height - rectHeight,height:rectHeight,width:rectWidth,dx:wallMovingVelocity.dx})
                 listRects.push(obstacle);
             }
             viewObject.rect.push(listRects);
@@ -134,7 +132,7 @@ var MainFactory = function() {
         let processorTimer = setInterval(function() {
             // how much time passed from the start?
             let currTS = Date.now();
-            processor.process(phlappyBird, processT);
+            processor.process(phlappyBird, processT,canvas);
         }, processT);
 
         let rendererTimer = setInterval(function() {

@@ -8,6 +8,7 @@ var ObstacleFactory = function(wallOptions){
     this.y = wallOptions.y;
     this.height = wallOptions.height;
     this.width = wallOptions.width;
+    this.dx = wallOptions.dx;
     this.rgbArray = ['rgb(119, 54, 14)','rgb(140, 74, 13)','rgb(159, 91, 26)',
                     'rgb(119, 54, 14)','rgb(140, 74, 13)','rgb(159, 91, 26)','rgb(119, 54, 14)',
                     'rgb(140, 74, 13)','rgb(159, 91, 26)'];
@@ -24,7 +25,10 @@ var ObstacleFactory = function(wallOptions){
         this.rgbPerLayer.push(layerColor);
     }
 }
-
+ObstacleFactory.prototype.move = function(curPosition){
+  // update x only
+  this.x = this.x - curPosition.x;
+}
 ObstacleFactory.prototype.draw = function (ctx){
     // the bricks config will determined by
     // const brickConfig = {
