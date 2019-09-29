@@ -1,0 +1,19 @@
+canvas {
+    position:relative;
+}
+#wrapper {
+    width: 1024px;
+    height: 800px;
+    position: relative;
+    border: 2px solid black;
+}
+#phlappy-bird-canvas{
+    position:absolute; top:0px; left:0px;
+    z-index: 3;
+    /*border:1px solid red;*/
+}
+#background-canvas{
+    position:absolute; top:0px; left:0px;
+    z-index: 1;
+    /*border:1px solid green;*/
+}
