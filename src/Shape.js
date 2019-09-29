@@ -22,17 +22,30 @@ var BirdFactory = function(avatarOptions){
     this.frameTick = 100; // ms
 };
 
-BirdFactory.prototype.move = function(curPosition) {
+BirdFactory.prototype.move = function(curPosition, actionType) {
     // update x and y
     const canvas = document.querySelector('canvas');
-    if (this.y + this.avatarheight < canvas.height) {
-        this.x = curPosition.x;
-        this.y = curPosition.y;
-        this.dx = curPosition.dx;
-        this.dy = curPosition.dy;
+    switch(actionType) {
+        case 'gravity':
+            if (this.y + this.avatarheight < canvas.height) {
+                this.x = curPosition.x;
+                this.y = curPosition.y;
+                this.dx = curPosition.dx;
+                this.dy = curPosition.dy;
+            }
+            break;
+        case 'moveup':
+            if (this.y > 0) {
+                this.dy = curPosition.dy;
+                console.log(this.y);
+            }
+            break;
+        default:
+            break;
     }
 
 }
+
 
 BirdFactory.prototype.draw = function(currentTime, ctx) {
     ctx.save();

@@ -32,6 +32,13 @@ var MainFactory = function() {
 
     const renderer = new RendererFactory(phlappyBird, ctx);
     const processor = new ProcessorFactory(phlappyBird);
+    const utilityFunction = new Utilities();
+    const NUM_OF_WALL = 10;
+
+    const inputConfig = {
+        'uiType': 'COMPUTER',
+    };
+    const userInput = new UserInputFactory(phlappyBird, inputConfig);
 
     const processT = 25;
     const renderT = 50;
@@ -94,7 +101,7 @@ var MainFactory = function() {
             dx: 0,
             dy: 1,
             ddx: 0,
-            ddy: 0.25,
+            ddy: 0.5,
             avatarImage: frameImage,
         };
 

@@ -36,7 +36,7 @@ var ProcessorFactory = function(model) {
                     'y': shape.y,
                     'dx': shape.dx,
                     'dy': shape.dy,
-                });
+                }, 'gravity');
             }
         }
     }
