@@ -54,35 +54,33 @@ BirdFactory.prototype.draw = function(currentTime, ctx) {
     if (this.startTime === 0) {
         this.startTime = currentTime;
     } else {
-        frame = Math.floor( (currentTime - this.startTime ) / this.frameTick ) % 8;
+        frame = Math.floor( (currentTime - this.startTime ) / this.frameTick ) % 2;
     }
-    switch(frame) {
-        case 0:
-            ctx.drawImage(this.avatarImage[0], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        case 1:
-            ctx.drawImage(this.avatarImage[1], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        case 2:
-            ctx.drawImage(this.avatarImage[2], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        case 3:
-            ctx.drawImage(this.avatarImage[3], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        case 4:
-            ctx.drawImage(this.avatarImage[4], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        case 5:
-            ctx.drawImage(this.avatarImage[5], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        case 6:
-            ctx.drawImage(this.avatarImage[6], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        case 7:
-            ctx.drawImage(this.avatarImage[7], this.x, this.y, this.avatarWidth, this.avatarheight);
-            break;
-        default:
-            break;
+
+    if (this.dy > 0) {
+        // Normal state, use the same frame as the bird is not flying
+        switch(frame) {
+            case 0:
+                ctx.drawImage(this.avatarImage[1], this.x, this.y, this.avatarWidth, this.avatarheight);
+                break;
+            case 1:
+                ctx.drawImage(this.avatarImage[1], this.x, this.y, this.avatarWidth, this.avatarheight);
+                break;
+            default:
+                break;
+        }
+    } else {
+        // speed up state
+        switch(frame) {
+            case 0:
+                ctx.drawImage(this.avatarImage[2], this.x, this.y, this.avatarWidth, this.avatarheight);
+                break;
+            case 1:
+                ctx.drawImage(this.avatarImage[3], this.x, this.y, this.avatarWidth, this.avatarheight);
+                break;
+            default:
+                break;
+        }
     }
 
     ctx.restore();

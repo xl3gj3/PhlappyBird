@@ -53,7 +53,7 @@ var MainFactory = function() {
     // };
 
     main.loadImage = function(callback) {
-        const NUM_OF_FRAMES = 8;
+        const NUM_OF_FRAMES = 4;
         let frameImage = [];
 
         let loaded = 0;
@@ -72,8 +72,9 @@ var MainFactory = function() {
             }
         };
 
+        const fileName= 'red-frame-';
         for (var i = 0; i < NUM_OF_FRAMES; i++) {
-            let imgSrc = './assets/avatar/frame_trans_' + i + '.png';
+            let imgSrc = './assets/avatar/' + fileName + i + '.png';
             frameImage[i] = document.createElement("img");
             frameImage[i].setAttribute('id', 'avatar-frame-' + i);
             frameImage[i].setAttribute('src', imgSrc);
@@ -96,8 +97,8 @@ var MainFactory = function() {
         // }
         let start = Date.now(); // remember start time   
         const birdConfig = {
-            x: 10,
-            y: 10,
+            x: 50,
+            y: 50,
             dx: 0,
             dy: 1,
             ddx: 0,
