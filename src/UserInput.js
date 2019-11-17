@@ -1,8 +1,21 @@
-var UserInputFactory = function(model) {
+var UserInputFactory = function(model, config) {
+    let keyCode = null;
     switch (config.uiType) {
         // load browser factory
-        case 'BROWSER':
+        case 'COMPUTER':
+            // space
+            keyCode = 32;
+            window.addEventListener('keydown', function(e){
+                if (e.keyCode == keyCode) {
+                    model.viewObject['bird'].factory.move({
+                        'dy': -2,
+                    }, 'moveup');
+                }
+            });
+            break;
+        default:
+            break;
 
     }
-    window.addEventListener('click')
+
 }
