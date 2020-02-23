@@ -8,9 +8,10 @@ var RendererFactory = function(model, ctx){
             // get individual shapeObj
             switch(shape) {
                 case 'bird':
-                    renderer.renderBird(
-                        model.viewObject.bird.factory,
-                        0);
+                    renderer.renderBird(model.viewObject.bird, 0);
+                    break;
+                case 'obstacle':
+                    renderer.renderObstable(model.viewObject.obstacle);
                     break;
                 default:
                     break;
@@ -19,14 +20,15 @@ var RendererFactory = function(model, ctx){
     }
 
     renderer.render = function(model, currTS) {
-        // loop through 
+        // loop through
         for (shape in model.viewObject) {
             // get individual shapeObj
             switch(shape) {
                 case 'bird':
-                    renderer.renderBird(
-                        model.viewObject.bird.factory,
-                        currTS);
+                    renderer.renderBird(model.viewObject.bird, currTS);
+                    break;
+                case 'obstacle':
+                    renderer.renderObstable(model.viewObject.obstacle);
                     break;
                 default:
                     break;
@@ -34,9 +36,22 @@ var RendererFactory = function(model, ctx){
         }
     }
 
-    renderer.renderBird = function(birdFactory, currTS) {
-        birdFactory.draw(currTS, renderer.ctx);
+    renderer.renderBird = function(bird, currTS) {
+        for (let index = 0; index < bird.length; index++) {
+            bird[index].factory.draw(currTS, renderer.ctx);
+        }
     }
+
+    renderer.renderObstable = function(obstableFactory) {
+        for (const wallPosition in obstableFactory) {
+            if (obstableFactory.hasOwnProperty(wallPosition)) {
+                obstableFactory[wallPosition].map(wall=>{
+                    wall.factory.draw(renderer.ctx)
+                });
+            }
+        }
+    }
+
 
     return renderer;
 }

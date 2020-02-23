@@ -7,7 +7,7 @@ var UserInputFactory = function(model, config) {
             keyCode = 32;
             window.addEventListener('keydown', function(e){
                 if (e.keyCode == keyCode) {
-                    model.viewObject['bird'].factory.move({
+                    model.viewObject['bird'][0].factory.move({
                         'dy': -2,
                     }, 'moveup');
                 }

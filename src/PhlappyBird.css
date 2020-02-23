@@ -3,7 +3,7 @@ canvas {
 }
 #wrapper {
     width: 1024px;
-    height: 800px;
+    height: 720px;
     position: relative;
     border: 2px solid black;
 }

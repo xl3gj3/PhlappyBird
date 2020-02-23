@@ -1,10 +1,88 @@
-var ObstacleFactory = function(wallOptions){
-    // shape.prototype.draw()
+/***************************************************
+ *                Obstacle Factory
+ **************************************************/
+var ObstacleFactory = function(wallOptions) {
+    // Brick settings
+    this.brickConfig = {
+        height : 15,
+        width : 45
+    }
+    // wall settings
+    this.x = wallOptions.x;
+    this.y = wallOptions.y;
+    this.dx = wallOptions.dx;
+    this.dy = wallOptions.dy;
+    this.height = wallOptions.height
+    this.numberPerLayer = 4;
+    this.wallColor = 'rgb(119, 54, 14)';
+}
+
+ObstacleFactory.prototype.draw = function(ctx) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(this.x, this.y, 135, this.brickConfig.height * this.height);
+    ctx.clip();
+    this.drawrWall(ctx);
+    ctx.restore();
+    // ctx.stroke();
+}
+
+ObstacleFactory.prototype.drawrWall = function(ctx) {
+    let y = this.y;
+    for (let index = 0; index < this.height; index++) {
+        if (index % 2 === 0) {
+            this.drawOneLayerOfBricks(true,ctx,y);
+
+        } else {
+            this.drawOneLayerOfBricks(false,ctx,y);
+        }
+        y  += this.brickConfig.height
+    }
+    // this.drawBrick(ctx);
 
 }
 
-var BirdFactory = function(avatarOptions){
-    // shape.prototype.draw()
+ObstacleFactory.prototype.drawOneLayerOfBricks = function(offset, ctx, y) {
+    let x = this.x;
+    if (offset) {
+        x = this.x - this.brickConfig.width/2;
+    }
+    for (let index = 0; index < this.numberPerLayer; index++) {
+        this.drawBrick(ctx,x,y);
+        x += this.brickConfig.width;
+    }
+}
+
+ObstacleFactory.prototype.drawBrick = function(ctx, x, y) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(x, y, this.brickConfig.width, this.brickConfig.height);
+    ctx.fillStyle = this.wallColor;
+    ctx.fillRect(x, y, this.brickConfig.width, this.brickConfig.height);
+    ctx.stroke();
+    ctx.restore();
+}
+
+ObstacleFactory.prototype.move = function(curPosition, actionType) {
+    // update x and y
+    const canvas = document.querySelector('canvas');
+    // console.log(actionType);
+    // console.log(curPosition);
+    switch(actionType) {
+        case 'constantMovement':
+            this.x = curPosition.x
+            this.dx = curPosition.dx;
+            break;
+        default:
+            break;
+    }
+}
+
+/***************************************************
+ *                 Bird Factory
+ **************************************************/
+
+var BirdFactory = function(avatarOptions) {
     this.x = avatarOptions.x;
     this.y = avatarOptions.y;
     this.dx = avatarOptions.dx;
@@ -37,7 +115,6 @@ BirdFactory.prototype.move = function(curPosition, actionType) {
         case 'moveup':
             if (this.y > 0) {
                 this.dy = curPosition.dy;
-                console.log(this.y);
             }
             break;
         default:
